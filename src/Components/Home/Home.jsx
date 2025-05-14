@@ -113,7 +113,7 @@ function Home() {
             {todos.length > 0 && (
               <button
                 onClick={downloadAllTodos}
-                className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-sm"
+                className="flex items-center gap-2 bg-blue-600 hover:bg-green-400 text-white px-4 py-2 rounded-lg transition-all duration-200 shadow-sm"
               >
                 <FaDownload className="text-sm" />
                 <span className="hidden sm:inline">Export All</span>

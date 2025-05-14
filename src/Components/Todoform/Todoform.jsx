@@ -26,7 +26,7 @@ const Todoform = ({ onAdd }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What needs to be done?"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
           />
         </div>
         
@@ -39,13 +39,13 @@ const Todoform = ({ onAdd }) => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Add details about this task..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg h-24 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent transition-all"
           />
         </div>
         
         <button
           type="submit"
-          className="flex items-center justify-center gap-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm"
+          className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-green-400 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm"
         >
           <FaPlus className="text-sm" />
           Add Task
