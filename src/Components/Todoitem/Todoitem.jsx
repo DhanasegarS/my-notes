@@ -12,38 +12,45 @@ const Todoitem = ({ todo, onToggle, onDelete, onUpdate }) => {
     setIsEditing(false);
   };
 
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this todo?');
+    if (confirmDelete) {
+      onDelete(todo.id);
+    }
+  };
+
   const handleDownload = () => {
-  const doc = new jsPDF();
-  
-  // Set title with larger font
-  doc.setFontSize(16);
-  doc.setTextColor(40, 40, 40);
-  doc.text(`Task: ${todo.title}`, 15, 15);
-  
-  // Set status color based on completion
-  if (todo.completed) {
-    doc.setTextColor(0, 128, 0); // Green for completed
-  } else {
-    doc.setTextColor(128, 0, 0); // Red for pending
-  }
-  
-  // Add status text
-  doc.setFontSize(12);
-  doc.text(`Status: ${todo.completed ? 'Completed' : 'Pending'}`, 15, 25);
-  
-  // Add notes if they exist
-  if (todo.notes) {
-    doc.setTextColor(80, 80, 80);
-    const splitNotes = doc.splitTextToSize(todo.notes, 180);
-    doc.text(splitNotes, 15, 35);
-  }
-  
-  // Add creation date at bottom
-  doc.setTextColor(100, 100, 100);
-  doc.text(`Created: ${new Date(todo.createdAt).toLocaleString()}`, 15, doc.internal.pageSize.height - 15);
-  
-  doc.save(`task-${todo.id}.pdf`);
-};
+    const doc = new jsPDF();
+    
+    // Set title with larger font
+    doc.setFontSize(16);
+    doc.setTextColor(40, 40, 40);
+    doc.text(`Task: ${todo.title}`, 15, 15);
+    
+    // Set status color based on completion
+    if (todo.completed) {
+      doc.setTextColor(0, 128, 0); // Green for completed
+    } else {
+      doc.setTextColor(128, 0, 0); // Red for pending
+    }
+    
+    // Add status text
+    doc.setFontSize(12);
+    doc.text(`Status: ${todo.completed ? 'Completed' : 'Pending'}`, 15, 25);
+    
+    // Add notes if they exist
+    if (todo.notes) {
+      doc.setTextColor(80, 80, 80);
+      const splitNotes = doc.splitTextToSize(todo.notes, 180);
+      doc.text(splitNotes, 15, 35);
+    }
+    
+    // Add creation date at bottom
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Created: ${new Date(todo.createdAt).toLocaleString()}`, 15, doc.internal.pageSize.height - 15);
+    
+    doc.save(`task-${todo.id}.pdf`);
+  };
 
   return (
     <div className={`p-4 rounded-lg shadow-sm ${todo.completed ? 'bg-green-50 border border-green-100' : 'bg-white border border-gray-100'}`}>
@@ -120,7 +127,7 @@ const Todoitem = ({ todo, onToggle, onDelete, onUpdate }) => {
                 <FaEdit className="text-sm" />
               </button>
               <button
-                onClick={() => onDelete(todo.id)}
+                onClick={handleDelete}
                 className="p-2 text-red-500 hover:text-red-700 rounded-full hover:bg-red-50 transition-colors"
                 title="Delete"
               >
