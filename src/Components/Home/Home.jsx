@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react';  // Added useEffect import
-import { FaDownload } from 'react-icons/fa';  // Added FaDownload import
-import { jsPDF } from 'jspdf';  // Added jsPDF import
-import Todoform from '../Todoform/Todoform';
-import Todolist from '../Todolist/Todolist';
+import { useState, useEffect } from "react";
+import { FaDownload } from "react-icons/fa";
+import { jsPDF } from "jspdf";
+import Todoform from "../Todoform/Todoform";
+import Todolist from "../Todolist/Todolist";
+import { subjects, subjectColors } from "../Todoform/Todoform";
 
 function Home() {
   const [todos, setTodos] = useState(() => {
-    // Load todos from localStorage if they exist
-    const savedTodos = localStorage.getItem('todos');
+    const savedTodos = localStorage.getItem("todos");
     return savedTodos ? JSON.parse(savedTodos) : [];
   });
 
-  // Save todos to localStorage whenever they change
+  const [activeSubject, setActiveSubject] = useState("All");
+
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (title, notes) => {
+  const addTodo = (title, notes, subject) => {
     const newTodo = {
       id: crypto.randomUUID(),
       title,
       notes,
+      subject,
       completed: false,
       createdAt: new Date().toISOString(),
     };
@@ -39,68 +41,99 @@ function Home() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const updateTodo = (id, updatedTitle, updatedNotes) => {
+  const updateTodo = (id, updatedTitle, updatedNotes, updatedSubject) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id
-          ? { ...todo, title: updatedTitle, notes: updatedNotes }
+          ? {
+              ...todo,
+              title: updatedTitle,
+              notes: updatedNotes,
+              subject: updatedSubject,
+            }
           : todo
       )
     );
   };
 
+  const filteredTodos =
+    activeSubject === "All"
+      ? todos
+      : todos.filter((todo) => todo.subject === activeSubject);
+
+  const calculateSubjectProgress = (subject) => {
+    const subjectTodos = todos.filter((todo) => todo.subject === subject);
+    if (subjectTodos.length === 0) return 0;
+    const completed = subjectTodos.filter((todo) => todo.completed).length;
+    return Math.round((completed / subjectTodos.length) * 100);
+  };
+
   const downloadAllTodos = () => {
+  try {
     const doc = new jsPDF();
     
-    // Add title with current date
+    // Header
     doc.setFontSize(20);
-    doc.setTextColor(40, 40, 40);
-    doc.text(`All Todos - ${new Date().toLocaleDateString()}`, 105, 15, null, null, 'center');
+    doc.text(`My Study Plan - ${new Date().toLocaleDateString()}`, 105, 15, { align: 'center' });
     
-    // Add todos
-    doc.setFontSize(12);
     let yPosition = 30;
     
     todos.forEach((todo, index) => {
-      // Set color based on completion status
+      // Reset to default black color for most text
+      doc.setTextColor(0, 0, 0);
+      
+      // Subject
+      doc.setFontSize(12);
+      doc.text(`Subject: ${todo.subject}`, 15, yPosition);
+      
+      // Title
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${index + 1}. ${todo.title}`, 15, yPosition + 10);
+      
+      // Status - Simplified color approach
+      doc.setFont('helvetica', 'normal');
       if (todo.completed) {
         doc.setTextColor(0, 128, 0); // Green for completed
       } else {
         doc.setTextColor(128, 0, 0); // Red for pending
       }
+      doc.text(`Status: ${todo.completed ? 'Completed' : 'Pending'}`, 15, yPosition + 16);
       
-      // Add todo title
-      doc.setFont('helvetica', 'bold');
-      doc.text(`${index + 1}. ${todo.title}`, 15, yPosition);
+      // Reset to dark gray for notes
+      doc.setTextColor(80, 80, 80);
       
-      // Add status
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Status: ${todo.completed ? 'Completed' : 'Pending'}`, 15, yPosition + 7);
-      
-      // Add notes if they exist
-      if (todo.notes) {
-        doc.setTextColor(80, 80, 80);
-        const splitNotes = doc.splitTextToSize(todo.notes, 180);
-        doc.text(splitNotes, 15, yPosition + 14);
-        yPosition += 14 + (splitNotes.length * 7);
+      // Notes handling
+      if (todo.notes && typeof todo.notes === 'string') {
+        const cleanNotes = todo.notes.trim();
+        if (cleanNotes !== '') {
+          const splitNotes = doc.splitTextToSize(cleanNotes, 180);
+          doc.text(splitNotes, 15, yPosition + 22);
+          yPosition += 22 + (splitNotes.length * 7);
+        } else {
+          yPosition += 28;
+        }
       } else {
-        yPosition += 21;
+        yPosition += 28;
       }
       
-      // Add separator
+      // Separator line
       doc.setDrawColor(200, 200, 200);
       doc.line(15, yPosition, 195, yPosition);
       yPosition += 10;
       
-      // Add new page if needed
+      // Page break if needed
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
       }
     });
     
-    doc.save(`all-todos-${new Date().toISOString().slice(0, 10)}.pdf`);
-  };
+    doc.save(`SK-study-plan-${new Date().toISOString().slice(0, 10)}.pdf`);
+  } catch (error) {
+    console.error('PDF Generation Error:', error);
+    alert('Could not generate PDF. Please try again later.');
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-4 px-2 sm:px-4 md:px-8">
@@ -108,7 +141,7 @@ function Home() {
         <div className="p-6 sm:p-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              Todo List with Notes
+              Study Planner
             </h1>
             {todos.length > 0 && (
               <button
@@ -120,10 +153,72 @@ function Home() {
               </button>
             )}
           </div>
-          
+
+          {/* Subject Progress Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+            <div
+              onClick={() => setActiveSubject("All")}
+              className={`bg-white p-3 rounded-lg shadow cursor-pointer transition-all ${
+                activeSubject === "All" ? "ring-2 ring-blue-500" : ""
+              }`}
+            >
+              <h3 className="font-medium text-sm">All Subjects</h3>
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-blue-600 h-2 rounded-full"
+                    style={{
+                      width: `${
+                        todos.length > 0
+                          ? Math.round(
+                              (todos.filter((t) => t.completed).length /
+                                todos.length) *
+                                100
+                            )
+                          : 0
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+                <p className="text-xs mt-1 text-gray-500">
+                  {todos.filter((t) => t.completed).length} / {todos.length}
+                </p>
+              </div>
+            </div>
+
+            {subjects.map((subject) => (
+              <div
+                key={subject}
+                onClick={() => setActiveSubject(subject)}
+                className={`bg-white p-3 rounded-lg shadow cursor-pointer transition-all ${
+                  activeSubject === subject ? "ring-2 ring-blue-500" : ""
+                }`}
+              >
+                <h3 className="font-medium text-sm">{subject}</h3>
+                <div className="mt-2">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className={`h-2 rounded-full ${
+                        subjectColors[subject].split(" ")[0]
+                      }`}
+                      style={{ width: `${calculateSubjectProgress(subject)}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-xs mt-1 text-gray-500">
+                    {
+                      todos.filter((t) => t.subject === subject && t.completed)
+                        .length
+                    }{" "}
+                    / {todos.filter((t) => t.subject === subject).length}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <Todoform onAdd={addTodo} />
           <Todolist
-            todos={todos}
+            todos={filteredTodos}
             onToggle={toggleTodo}
             onDelete={deleteTodo}
             onUpdate={updateTodo}
