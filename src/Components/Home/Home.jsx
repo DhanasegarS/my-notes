@@ -141,7 +141,7 @@ function Home() {
         <div className="p-6 sm:p-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              Study Planner
+              My Study Planner
             </h1>
             {todos.length > 0 && (
               <button
