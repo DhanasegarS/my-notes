@@ -5,6 +5,7 @@ import { Main } from "../core/Main/Main";
 import PartA from "../Components/Syllabus/PartA";
 import PartB from "../Components/Syllabus/PartB";
 import PartC from "../Components/Syllabus/PartC";
+import MyQuestions from "../Components/MyQuestions/MyQuestions";
 
 export const Approuter = () => {
   return (
@@ -16,6 +17,8 @@ export const Approuter = () => {
             <Route path="/part-a" element={<PartA />} />
             <Route path="/part-b" element={<PartB />} />
             <Route path="/part-c" element={<PartC />} />
+            <Route path="*" element={<Home />} />
+            <Route path="/question" element={<MyQuestions />} />
           </Route>
         </Routes>
       </BrowserRouter>
