@@ -1,5 +1,6 @@
 // components/PartA.jsx (Tamil Eligibility Test)
 import { useState } from "react";
+import SplashCursor from "../SplashCursor/SplashCursor";
 
 const PartA = () => {
   const [markedItems, setMarkedItems] = useState([]);
@@ -115,6 +116,7 @@ const PartA = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4 pb-20">
+      <SplashCursor />
       <h2 className="text-xl font-bold mb-6 text-center text-blue-700">
         Paper I - Tamil Eligibility Test (Part A)
       </h2>

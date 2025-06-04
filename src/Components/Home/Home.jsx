@@ -4,6 +4,8 @@ import { jsPDF } from "jspdf";
 import Todoform from "../Todoform/Todoform";
 import Todolist from "../Todolist/Todolist";
 import { subjects, subjectColors } from "../Todoform/Todoform";
+import SplashCursor from "../SplashCursor/SplashCursor";
+import RotatingText from "../RotatingText/RotatingText";
 
 function Home() {
   const [todos, setTodos] = useState(() => {
@@ -69,71 +71,77 @@ function Home() {
   };
 
   const downloadAllTodos = () => {
-  try {
-    const doc = new jsPDF();
-    
-    // Header
-    doc.setFontSize(20);
-    doc.text(`My Study Plan - ${new Date().toLocaleDateString()}`, 105, 15, { align: 'center' });
-    
-    let yPosition = 30;
-    
-    todos.forEach((todo, index) => {
-      // Reset to default black color for most text
-      doc.setTextColor(0, 0, 0);
-      
-      // Subject
-      doc.setFontSize(12);
-      doc.text(`Subject: ${todo.subject}`, 15, yPosition);
-      
-      // Title
-      doc.setFont('helvetica', 'bold');
-      doc.text(`${index + 1}. ${todo.title}`, 15, yPosition + 10);
-      
-      // Status - Simplified color approach
-      doc.setFont('helvetica', 'normal');
-      if (todo.completed) {
-        doc.setTextColor(0, 128, 0); // Green for completed
-      } else {
-        doc.setTextColor(128, 0, 0); // Red for pending
-      }
-      doc.text(`Status: ${todo.completed ? 'Completed' : 'Pending'}`, 15, yPosition + 16);
-      
-      // Reset to dark gray for notes
-      doc.setTextColor(80, 80, 80);
-      
-      // Notes handling
-      if (todo.notes && typeof todo.notes === 'string') {
-        const cleanNotes = todo.notes.trim();
-        if (cleanNotes !== '') {
-          const splitNotes = doc.splitTextToSize(cleanNotes, 180);
-          doc.text(splitNotes, 15, yPosition + 22);
-          yPosition += 22 + (splitNotes.length * 7);
+    try {
+      const doc = new jsPDF();
+
+      // Header
+      doc.setFontSize(20);
+      doc.text(`My Study Plan - ${new Date().toLocaleDateString()}`, 105, 15, {
+        align: "center",
+      });
+
+      let yPosition = 30;
+
+      todos.forEach((todo, index) => {
+        // Reset to default black color for most text
+        doc.setTextColor(0, 0, 0);
+
+        // Subject
+        doc.setFontSize(12);
+        doc.text(`Subject: ${todo.subject}`, 15, yPosition);
+
+        // Title
+        doc.setFont("helvetica", "bold");
+        doc.text(`${index + 1}. ${todo.title}`, 15, yPosition + 10);
+
+        // Status - Simplified color approach
+        doc.setFont("helvetica", "normal");
+        if (todo.completed) {
+          doc.setTextColor(0, 128, 0); // Green for completed
+        } else {
+          doc.setTextColor(128, 0, 0); // Red for pending
+        }
+        doc.text(
+          `Status: ${todo.completed ? "Completed" : "Pending"}`,
+          15,
+          yPosition + 16
+        );
+
+        // Reset to dark gray for notes
+        doc.setTextColor(80, 80, 80);
+
+        // Notes handling
+        if (todo.notes && typeof todo.notes === "string") {
+          const cleanNotes = todo.notes.trim();
+          if (cleanNotes !== "") {
+            const splitNotes = doc.splitTextToSize(cleanNotes, 180);
+            doc.text(splitNotes, 15, yPosition + 22);
+            yPosition += 22 + splitNotes.length * 7;
+          } else {
+            yPosition += 28;
+          }
         } else {
           yPosition += 28;
         }
-      } else {
-        yPosition += 28;
-      }
-      
-      // Separator line
-      doc.setDrawColor(200, 200, 200);
-      doc.line(15, yPosition, 195, yPosition);
-      yPosition += 10;
-      
-      // Page break if needed
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 20;
-      }
-    });
-    
-    doc.save(`SK-study-plan-${new Date().toISOString().slice(0, 10)}.pdf`);
-  } catch (error) {
-    console.error('PDF Generation Error:', error);
-    alert('Could not generate PDF. Please try again later.');
-  }
-};
+
+        // Separator line
+        doc.setDrawColor(200, 200, 200);
+        doc.line(15, yPosition, 195, yPosition);
+        yPosition += 10;
+
+        // Page break if needed
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+        }
+      });
+
+      doc.save(`SK-study-plan-${new Date().toISOString().slice(0, 10)}.pdf`);
+    } catch (error) {
+      console.error("PDF Generation Error:", error);
+      alert("Could not generate PDF. Please try again later.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-4 px-2 sm:px-4 md:px-8">
@@ -141,7 +149,24 @@ function Home() {
         <div className="p-6 sm:p-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              My Study Planner
+              <RotatingText
+                texts={[
+                  "Stay Focused!",
+                  "You Can Do This!",
+                  "Keep Going!",
+                  "Success is Coming!",
+                ]}
+                mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-right rounded-lg"
+                staggerFrom={"last"}
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={2000}
+              />
+              
             </h1>
             {todos.length > 0 && (
               <button
@@ -214,6 +239,7 @@ function Home() {
                 </div>
               </div>
             ))}
+            <SplashCursor />
           </div>
 
           <Todoform onAdd={addTodo} />
