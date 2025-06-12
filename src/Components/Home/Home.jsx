@@ -144,11 +144,11 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-4 px-2 sm:px-4 md:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-4 px-2 sm:px-4 md:px-8 ">
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden ">
         <div className="p-6 sm:p-8">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl sm:text-3xl font-bold text-left text-gray-800 z-0" >
               <RotatingText
                 texts={[
                   "Stay Focused!",
@@ -239,7 +239,7 @@ function Home() {
                 </div>
               </div>
             ))}
-            <SplashCursor />
+            {/* <SplashCursor /> */}
           </div>
 
           <Todoform onAdd={addTodo} />
