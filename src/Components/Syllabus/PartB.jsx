@@ -14,7 +14,7 @@ const PartB = () => {
   const syllabus = [
     {
       id: "unit1",
-      title: "UNIT I: GENERAL SCIENCE (5 Questions)",
+      title: "UNIT I: GENERAL SCIENCE ",
       content: [
         "Scientific knowledge and scientific temper",
         "Nature of universe - General scientific laws",
