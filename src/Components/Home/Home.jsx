@@ -187,7 +187,7 @@ function Home() {
                 activeSubject === "All" ? "ring-2 ring-blue-500" : ""
               }`}
             >
-              <h3 className="font-medium text-sm">All Subjects</h3>
+              <h3 className="font-medium text-sm">All tnpsc Subjects</h3>
               <div className="mt-2">
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div

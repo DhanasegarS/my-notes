@@ -26,7 +26,7 @@ const PartB = () => {
     },
     {
       id: "unit2",
-      title: "UNIT II: GEOGRAPHY OF INDIA (5 Questions)",
+      title: "UNIT II: GEOGRAPHY OF INDIA ",
       content: [
         "Location - Physical features",
         "Monsoon, rainfall, weather and climate - Water resources - Rivers in India",
@@ -43,7 +43,7 @@ const PartB = () => {
     {
       id: "unit3",
       title:
-        "UNIT III: HISTORY, CULTURE AND INDIAN NATIONAL MOVEMENT (10 Questions)",
+        "UNIT III: HISTORY, CULTURE AND INDIAN NATIONAL MOVEMENT ",
       content: [
         "Indus Valley Civilization - Guptas, Delhi Sultans, Mughals, and Marathas",
         "Age of Vijayanagaram and Bahmani Kingdoms - South Indian History",
@@ -80,6 +80,8 @@ const PartB = () => {
       title: "UNIT V: INDIAN ECONOMY & TAMIL NADU DEVELOPMENT (20 Questions)",
       content: [
         "Nature of Indian Economy – Five-year plans",
+        "Planning Commission and Niti Aayog",
+        "Fiscal Policy and Monetary Policy - RBI","Nature of Indian Economy – Five-year plans",
         "Planning Commission and Niti Aayog",
         "Fiscal Policy and Monetary Policy - RBI",
         "Finance Commission - Resource sharing",
