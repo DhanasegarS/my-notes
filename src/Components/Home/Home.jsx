@@ -151,7 +151,7 @@ function Home() {
             <h1 className="text-2xl sm:text-3xl font-bold text-left text-gray-800 z-0" >
               <RotatingText
                 texts={[
-                  "Stay Focused!",
+                  "Stay Focused! buddy",
                   "You Can Do This!",
                   "Keep Going!",
                   "Success is Coming!",
