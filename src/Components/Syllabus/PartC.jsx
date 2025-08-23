@@ -29,7 +29,12 @@ const PartC = () => {
       id: 'unit2',
       title: 'UNIT II: REASONING (10 Questions)',
       content: [
-        'Logical reasoning - Puzzles',
+        'Logical reasoning - Puzzles', "Fiscal Policy and Monetary Policy - RBI","Nature of Indian Economy – Five-year plans",
+        "Planning Commission and Niti Aayog",
+        "Fiscal Policy and Monetary Policy - RBI",
+        "Finance Commission - Resource sharing",
+        "Goods and Services Tax (GST)",
+        "Employment Generation, Land Reforms",
         'Dice - Visual reasoning',
         'Alpha numeric reasoning',
         'Number series'
