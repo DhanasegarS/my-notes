@@ -34,6 +34,8 @@ const PartC = () => {
         "Fiscal Policy and Monetary Policy - RBI",
         "Finance Commission - Resource sharing",
         "Goods and Services Tax (GST)",
+        "Employment Generation, Land Reforms","Finance Commission - Resource sharing",
+        "Goods and Services Tax (GST)",
         "Employment Generation, Land Reforms",
         'Dice - Visual reasoning',
         'Alpha numeric reasoning',
