@@ -38,6 +38,9 @@ const PartC = () => {
         "Goods and Services Tax (GST)",
         "Employment Generation, Land Reforms",
         'Dice - Visual reasoning',
+        'Alpha numeric reasoning', "Goods and Services Tax (GST)",
+        "Employment Generation, Land Reforms",
+        'Dice - Visual reasoning',
         'Alpha numeric reasoning',
         'Number series'
       ]
