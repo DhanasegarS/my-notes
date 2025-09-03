@@ -86,11 +86,7 @@ const PartB = () => {
         "Fiscal Policy and Monetary Policy - RBI",
         "Finance Commission - Resource sharing",
         "Goods and Services Tax (GST)",
-        "Employment Generation, Land Reforms", "Fiscal Policy and Monetary Policy - RBI","Nature of Indian Economy – Five-year plans",
-        "Planning Commission and Niti Aayog",
-        "Fiscal Policy and Monetary Policy - RBI",
-        "Finance Commission - Resource sharing",
-        "Goods and Services Tax (GST)",
+        
         "Employment Generation, Land Reforms",
         "Application of Science in Agriculture",
         "Industrial growth - Rural welfare programmes",

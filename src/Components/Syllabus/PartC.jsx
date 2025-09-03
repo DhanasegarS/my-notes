@@ -40,13 +40,7 @@ const PartC = () => {
         'Dice - Visual reasoning',
         'Alpha numeric reasoning',"Fiscal Policy and Monetary Policy - RBI",
         "Finance Commission - Resource sharing",
-        "Goods and Services Tax (GST)",
-        "Employment Generation, Land Reforms",
-        'Dice - Visual reasoning',
-        'Alpha numeric reasoning', "Goods and Services Tax (GST)",
-        "Employment Generation, Land Reforms",
-        'Dice - Visual reasoning',
-        'Alpha numeric reasoning',
+        
         'Number series'
       ]
     }
